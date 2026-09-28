@@ -7,7 +7,7 @@
 1. **A：Baseline Fast RAG**：Semantic Chunking → BM25 + OpenAI Embedding KNN → RRF → Baseline Cross-Encoder。
 2. **B：Trained Fast RAG**：训练 Chunking → BM25 + 训练 Embedding KNN → RRF → 训练 Cross-Encoder。
 
-这是严格的两组 A/B Test，不做组件消融。两条流水线必须使用同一份冻结语料、查询、相关性标注、答案参考和评估器。生成模型、Prompt、硬件、并发、预热次数和测试轮数保持一致；Chunking、Embedding、Retrieval 和 Rerank 作为各自 RAG 的完整方案参与比较。
+这是严格的两组 A/B Test，不做组件消融。两条流水线必须使用同一份冻结语料、查询、相关性标注、答案参考和评估器。两组使用相同的 DeepSeek 生成模型 ID、Prompt、生成参数、硬件、并发、预热次数和测试轮数；Chunking、Embedding、Retrieval 和 Rerank 作为各自 RAG 的完整方案参与比较。
 
 ## 目录
 
@@ -72,7 +72,7 @@ Thinking 模式完全排除在本 A/B Test 之外，只使用训练版模型和�
 - 同一批测试文档、测试问题和相关性判断；
 - 测试文档不能出现在训练集或开发集中；
 - 相同的最终召回数量和最终上下文容量；
-- 相同的生成模型、Prompt、温度和最大输出长度；
+- 相同的 DeepSeek 生成模型 ID、Prompt、温度和最大输出长度；
 - 相同硬件、并发、预热策略和缓存策略；
 - A、B 使用独立索引，索引清单必须记录模型与参数版本；
 - A、B 按同一查询顺序执行，并保存单样本结果；

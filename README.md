@@ -1,6 +1,6 @@
 # Urban Development AI Chatbot
 
-本仓库规划一个模块化单体 Chatbot：FastAPI + PostgreSQL/pgvector + Redis + Celery，RAG 使用 LangChain/LangGraph，训练模型由 PyTorch/Sentence Transformers/Chonky 路线产生。
+本仓库规划一个模块化单体 Chatbot：FastAPI + PostgreSQL/pgvector + Redis + Celery，RAG 使用 LangChain/LangGraph，生成式 LLM 使用 DeepSeek API，训练模型由 PyTorch/Sentence Transformers/Chonky 路线产生。
 
 当前状态是 **architecture-first / documentation stage**：目录和接口已经规划，但 `main.py`、Router、依赖清单、训练函数、训练制品和正式测试集尚未实现，项目目前不可直接启动。
 
@@ -11,6 +11,8 @@
 - **Thinking**：有界 LangGraph Planner/Orchestrator，只使用训练版 Snapshot；没有训练制品时关闭。
 
 Fast 负责低延迟固定流程；Thinking 负责输入检查、题型路由、有界检索纠错、Web/工具、冲突处理、Human Interrupt 和最终答案 Grounding。Thinking 的 LangGraph Checkpoint 统一持久化到 PostgreSQL，使用 `run_id` 隔离每次执行。项目不采用微服务，不实现多 Agent、无限反思或无限工具探索。
+
+DeepSeek API 负责答案生成、路由、规划、证据判断等生成式 LLM 能力；Fast A 中的 OpenAI Embedding 只负责向量化，不是答案生成模型。DeepSeek 模型 ID 必须通过配置登记，API Key 不进入仓库。
 
 ## 目录
 

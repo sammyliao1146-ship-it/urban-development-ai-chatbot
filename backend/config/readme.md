@@ -7,7 +7,8 @@
 - 应用名称、运行环境、日志等级和调试开关；
 - FastAPI Host、Port 和 CORS；
 - PostgreSQL、Redis、Celery 的连接配置；
-- OpenAI、Web Search、外部数据 API 的配置字段；
+- DeepSeek API 的 Base URL、API Key、生成模型 ID、超时、重试和流式开关；
+- Fast A OpenAI Embedding、Web Search、外部数据 API 的配置字段；
 - 模型 Registry、PostgreSQL Checkpointer、索引制品根目录和设备配置；
 - Fast/Thinking 开关、超时、循环上限和工具调用上限；
 - 同会话 ChatRun 串行、Dispatcher 锁 TTL、乐观锁重试和队列配置；
@@ -22,6 +23,8 @@
 - 测试使用独立配置，不能连接生产数据库、Redis、索引或模型目录；
 - 运行期间视配置对象为只读，需要变更时创建新配置版本；
 - 模型、Prompt、索引和实验配置必须带版本，便于复现实验。
+- DeepSeek 是线上生成式 LLM Provider；模型 ID 缺失时启动失败，不得自动切换到其他生成模型；
+- DeepSeek API Key 与 OpenAI Embedding API Key 使用独立配置项，禁止共用或混淆。
 
 入口限流、安全 Header 和全局模型/SSE 容量控制当前为 **DEFERRED / interface-only**。配置层只预留 `rate_limit`、`security_headers` 和 `runtime_capacity` 命名空间及启用开关，默认关闭。
 

@@ -57,6 +57,15 @@
 
 ## 2. 不能违反的产品规则
 
+### 2.0 生成式 LLM
+
+- [ ] 线上生成式 LLM 固定使用 DeepSeek API，具体模型 ID 由配置明确登记。
+- [ ] DeepSeek API 用于答案生成、Query Rewrite、路由、Planner、Evidence Grade、Grounding、摘要和记忆抽取等 LLM 能力。
+- [ ] DeepSeek 不替代 OpenAI Embedding、训练 Embedding、BM25、Cross-Encoder 或本地 PyTorch 模型。
+- [ ] Fast A、Fast B 的 A/B Test 必须使用相同 DeepSeek 模型 ID、Prompt 和生成参数。
+- [ ] DeepSeek Provider 不可用时明确失败，不得静默切换到其他生成模型。
+- [ ] DeepSeek 的隐藏推理或 reasoning content 不得写入 SSE、日志、Graph State 或 Checkpoint。
+
 ### 2.1 Fast 模式
 
 - [ ] Fast A 使用 Semantic Chunking + 对应 BM25 + OpenAI Embedding KNN + RRF + Baseline Cross-Encoder。
@@ -307,6 +316,8 @@ rag/
 - [ ] Fast A 使用登记的 Baseline Cross-Encoder，固定候选窗口和最终 Top-N Evidence。
 - [ ] 记录 Rerank 前后 rank、score、模型版本和延迟。
 - [ ] 在 `rag/pipeline/generation/` 建立基于证据的答案生成。
+- [ ] 通过统一 Provider 契约调用配置中登记的 DeepSeek API，不在 Pipeline、Graph 或 Prompt 中直接创建客户端。
+- [ ] DeepSeek Provider 支持超时、有限重试、取消、流式与非流式调用、结构化输出校验、用量和延迟记录。
 - [ ] 建立证据不足时的拒答，不允许只靠模型常识补写。
 - [ ] 建立 Citation 输出。
 - [ ] 组装 Fast A Pipeline。
@@ -695,6 +706,7 @@ ModernBERT Base 为默认候选，Large 为独立可选版本
 
 只有以下全部完成后，项目才可以称为完整 Chatbot：
 
+- [ ] Fast A、Fast B 和 Thinking 的生成式 LLM 均通过配置登记的 DeepSeek API Provider 调用，且不存在静默 LLM 回退。
 - [ ] Fast A 可以使用 Semantic Chunking + OpenAI Embedding Dense KNN + 对应 BM25 + RRF + Baseline Cross-Encoder 完成检索、生成和引用。
 - [ ] Fast B 可以使用训练 Chunking + 训练 Embedding Dense KNN + 对应 BM25 + RRF + 训练 Cross-Encoder 完成同样流程。
 - [ ] Thinking 只使用训练版 BM25/Dense IndexSnapshot 和训练 Cross-Encoder。

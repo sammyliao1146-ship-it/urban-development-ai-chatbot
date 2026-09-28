@@ -12,3 +12,5 @@
 - Citation 检查和评估 Judge。
 
 每个 Prompt 应有稳定 ID、版本、输入变量、适用模型和变更记录。Prompt 不应散落在 Router、Repository 或数据库模型中，也不能包含 API Key、连接信息或真实用户隐私数据。
+
+当前线上 Prompt 的适用生成模型必须登记为具体 DeepSeek 模型 ID。升级模型 ID 时应创建新的 Prompt 兼容性记录并重新验证结构化输出、拒答、Grounding 和安全事件过滤，不得假设不同模型版本行为完全一致。
